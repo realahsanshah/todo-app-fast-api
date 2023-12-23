@@ -1,10 +1,15 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-SQLALCHEMY_DATABASE_URL = os.environ['SQLALCHEMY_DATABASE_URL']
-engine = create_engine(
-   SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+from fastapi import FastAPI
+from components.todo.todo import router
 
+# print(os.environ['SQLALCHEMY_DATABASE_URL'])
+app = FastAPI()
+
+
+app.include_router(
+    router, prefix="",tags=["todo"]
+)
+
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run("app", host="127.0.0.1", port=8000,reload=True)
