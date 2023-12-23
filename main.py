@@ -1,13 +1,18 @@
 import os
 from fastapi import FastAPI
-from components.todo.todo import router
+from components.todo.todo import router as todo_router
+from components.user.user import router as user_router
 
 # print(os.environ['SQLALCHEMY_DATABASE_URL'])
 app = FastAPI()
 
 
 app.include_router(
-    router, prefix="",tags=["todo"]
+    user_router, prefix="",tags=["user"]
+)   
+
+app.include_router(
+    todo_router, prefix="",tags=["todo"]
 )
 
 # if __name__ == "__main__":

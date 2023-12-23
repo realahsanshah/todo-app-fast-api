@@ -11,3 +11,10 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+def get_db():
+   """provide db session to path operation functions"""
+   try:
+      db = SessionLocal()
+      yield db
+   finally:
+   	db.close()
