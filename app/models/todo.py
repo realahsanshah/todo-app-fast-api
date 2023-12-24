@@ -1,9 +1,13 @@
 # app/models/todo.py
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, func,inspect
 from app.database.base_class import Base
+
+
+
 
 class Todo(Base):
     __tablename__ = "todos"
+
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(120), index=True, )
     description = Column(String(255), index=True, nullable=True)

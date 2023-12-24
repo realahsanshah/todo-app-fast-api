@@ -11,7 +11,9 @@ class TodoCreate(TodoBase):
     pass
 
 class TodoUpdate(TodoBase):
-    pass
+    title:str = None
+    description:str = None
+    is_completed:bool = False
 
 class Todo(TodoBase):
     id: int

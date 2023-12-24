@@ -1,7 +1,9 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,inspect
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from app.models.todo import Todo
+
 
 load_dotenv()
 
@@ -21,9 +23,12 @@ except Exception as e:
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+Todo.__table__.create(bind=engine, checkfirst=True)
+
+
 # get database 
 def get_db():
-    db = engine.connect()
+    db = SessionLocal()
     try:
         yield db
     finally:
