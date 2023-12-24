@@ -1,20 +1,26 @@
-import os
-from fastapi import FastAPI
-from components.todo.todo import router as todo_router
-from components.user.user import router as user_router
+from fastapi import FastAPI, status
+from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
+from app.api.v1.todos import todo
 
-# print(os.environ['SQLALCHEMY_DATABASE_URL'])
-app = FastAPI()
-
-
-app.include_router(
-    user_router, prefix="",tags=["user"]
-)   
-
-app.include_router(
-    todo_router, prefix="",tags=["todo"]
+description_text = """
+FastAPI TODO API Demo
+"""
+app = FastAPI(
+    title="FastAPI TODO API Demo",
+     description=description_text,
+    version=settings.API_VERSION,
+    contact=settings.CONTACT,
+    terms_of_service="https://www.ktechhub.com/terms/",
 )
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run("app", host="127.0.0.1", port=8000,reload=True)
+app.include_router(todo.router, prefix="/api/v1")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.ALLOWED_HOSTS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
