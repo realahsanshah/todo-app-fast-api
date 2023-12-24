@@ -6,3 +6,4 @@ python-dotenv
 psycopg2
 pydantic[email]
 pydantic-settings
+sqlalchemy
